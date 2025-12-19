@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssafy.exam.model.dao.FoodDao">
+
+    <insert id="insert" parameterType="Food">
+        INSERT INTO food (code, name, category, serving_size, calories, carbohydrate,
+                          protein, fat, sugar, sodium, cholesterol, saturated_fat, trans_fat)
+        VALUES (#{code}, #{name}, #{category}, #{servingSize}, #{calories}, #{carbohydrate},
+                #{protein}, #{fat}, #{sugar}, #{sodium}, #{cholesterol}, #{saturatedFat}, #{transFat})
+    </insert>
+
+    <select id="selectByCode" parameterType="String" resultType="Food">
+        SELECT * FROM food WHERE code = #{code}
+    </select>
+
+    <select id="selectAll" resultType="Food">
+        SELECT * FROM food ORDER BY code
+    </select>
+
+    <select id="selectByName" parameterType="String" resultType="Food">
+        SELECT * FROM food WHERE name LIKE CONCAT('%', #{name}, '%') ORDER BY name
+    </select>
+
+    <select id="selectByCategory" parameterType="String" resultType="Food">
+        SELECT * FROM food WHERE category = #{category} ORDER BY name
+    </select>
+
+    <update id="update" parameterType="Food">
+        UPDATE food
+        SET name = #{name},
+            category = #{category},
+            serving_size = #{servingSize},
+            calories = #{calories},
+            carbohydrate = #{carbohydrate},
+            protein = #{protein},
+            fat = #{fat},
+            sugar = #{sugar},
+            sodium = #{sodium},
+            cholesterol = #{cholesterol},
+            saturated_fat = #{saturatedFat},
+            trans_fat = #{transFat}
+        WHERE code = #{code}
+    </update>
+
+    <delete id="delete" parameterType="String">
+        DELETE FROM food WHERE code = #{code}
+    </delete>
+
+    <delete id="deleteAll">
+        DELETE FROM food
+    </delete>
+
+</mapper>

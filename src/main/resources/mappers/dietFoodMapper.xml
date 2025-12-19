@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssafy.exam.model.dao.DietFoodDao">
+
+    <insert id="insert" parameterType="DietFood" useGeneratedKeys="true" keyProperty="dietFoodId">
+        INSERT INTO diet_food (diet_id, food_code, quantity)
+        VALUES (#{dietId}, #{foodCode}, #{quantity})
+    </insert>
+
+    <resultMap id="dietFoodWithFood" type="DietFood">
+        <id property="dietFoodId" column="diet_food_id"/>
+        <result property="dietId" column="diet_id"/>
+        <result property="foodCode" column="food_code"/>
+        <result property="quantity" column="quantity"/>
+        <association property="food" javaType="Food">
+            <id property="code" column="food_code"/>
+            <result property="name" column="name"/>
+            <result property="category" column="category"/>
+            <result property="servingSize" column="serving_size"/>
+            <result property="calories" column="calories"/>
+            <result property="carbohydrate" column="carbohydrate"/>
+            <result property="protein" column="protein"/>
+            <result property="fat" column="fat"/>
+            <result property="sugar" column="sugar"/>
+            <result property="sodium" column="sodium"/>
+            <result property="cholesterol" column="cholesterol"/>
+            <result property="saturatedFat" column="saturated_fat"/>
+            <result property="transFat" column="trans_fat"/>
+        </association>
+    </resultMap>
+
+    <select id="selectByDietId" parameterType="int" resultMap="dietFoodWithFood">
+        SELECT
+            df.diet_food_id,
+            df.diet_id,
+            df.food_code,
+            df.quantity,
+            f.name,
+            f.category,
+            f.serving_size,
+            f.calories,
+            f.carbohydrate,
+            f.protein,
+            f.fat,
+            f.sugar,
+            f.sodium,
+            f.cholesterol,
+            f.saturated_fat,
+            f.trans_fat
+        FROM diet_food df
+        JOIN food f ON df.food_code = f.code
+        WHERE df.diet_id = #{dietId}
+    </select>
+
+    <delete id="deleteByDietId" parameterType="int">
+        DELETE FROM diet_food WHERE diet_id = #{dietId}
+    </delete>
+
+</mapper>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssafy.exam.model.dao.DietDao">
+
+    <insert id="insert" parameterType="Diet" useGeneratedKeys="true" keyProperty="dietId">
+        INSERT INTO diet (member_no, meal_time, meal_type, memo)
+        VALUES (#{memberNo}, #{mealTime}, #{mealType}, #{memo})
+    </insert>
+
+    <resultMap id="dietWithFoods" type="Diet">
+        <id property="dietId" column="diet_id"/>
+        <result property="memberNo" column="member_no"/>
+        <result property="mealTime" column="meal_time"/>
+        <result property="mealType" column="meal_type"/>
+        <result property="memo" column="memo"/>
+        <collection property="dietFoods" ofType="DietFood" select="com.ssafy.exam.model.dao.DietFoodDao.selectByDietId" column="diet_id"/>
+    </resultMap>
+
+    <select id="selectById" parameterType="int" resultMap="dietWithFoods">
+        SELECT * FROM diet WHERE diet_id = #{dietId}
+    </select>
+
+    <select id="selectByMemberNo" parameterType="int" resultMap="dietWithFoods">
+        SELECT * FROM diet WHERE member_no = #{memberNo} ORDER BY meal_time DESC
+    </select>
+
+    <select id="selectByMemberNoAndDate" resultMap="dietWithFoods">
+        SELECT * FROM diet WHERE member_no = #{memberNo} AND DATE(meal_time) = #{date} ORDER BY meal_time
+    </select>
+
+    <update id="update" parameterType="Diet">
+        UPDATE diet
+        SET meal_time = #{mealTime},
+            meal_type = #{mealType},
+            memo = #{memo}
+        WHERE diet_id = #{dietId}
+    </update>
+
+    <delete id="delete" parameterType="int">
+        DELETE FROM diet WHERE diet_id = #{dietId}
+    </delete>
+
+</mapper>
