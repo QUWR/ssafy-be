@@ -1,0 +1,40 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(tree:*)",
+      "Bash(mkdir:*)",
+      "Bash(mvn clean:*)",
+      "Bash(mvn cargo:run:*)",
+      "Bash(lsof:*)",
+      "Bash(kill:*)",
+      "Bash(pkill:*)",
+      "Bash(awk:*)",
+      "Bash(xargs kill:*)",
+      "Bash(curl:*)",
+      "Bash(find:*)",
+      "Bash(jar tf:*)",
+      "Bash(jar xf:*)",
+      "Read(//opt/homebrew/Cellar/tomcat/11.0.11/libexec/webapps/ROOT/**)",
+      "Bash(brew services stop:*)",
+      "Bash(mvn package:*)",
+      "Bash(mvn:*)",
+      "Bash(for page in index.jsp login.jsp register.jsp profile.jsp food/search.jsp food/list.jsp)",
+      "Bash(do echo -n \"$page: \")",
+      "Bash(done)",
+      "Bash(for url in \"/\" \"/login.jsp\" \"/register.jsp\" \"/profile.jsp\" \"/food/list.jsp\" \"/food/search.jsp\" \"/member/profile\")",
+      "Bash(do echo \"Testing $url:\")",
+      "Bash(brew services:*)",
+      "Bash(mysql:*)",
+      "Bash(rm:*)",
+      "Bash(/Users/kdh/Downloads/BackendTest_example/src/main/java/com/ssafy/exam/model/dao/FileMusicDao.java )",
+      "Bash(/Users/kdh/Downloads/BackendTest_example/src/main/java/com/ssafy/exam/model/dao/MusicDao.java )",
+      "Bash(/Users/kdh/Downloads/BackendTest_example/src/main/java/com/ssafy/exam/model/service/MusicService.java )",
+      "Bash(/Users/kdh/Downloads/BackendTest_example/src/main/java/com/ssafy/exam/service/FoodDataService.java )",
+      "Bash(/Users/kdh/Downloads/BackendTest_example/src/main/java/com/ssafy/exam/service/FoodSearchService.java )",
+      "Bash(/Users/kdh/Downloads/BackendTest_example/members.dat)",
+      "Bash(rmdir:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}
