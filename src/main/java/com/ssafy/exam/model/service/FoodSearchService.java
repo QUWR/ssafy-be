@@ -1,7 +1,13 @@
 package com.ssafy.exam.model.service;
 
 import com.ssafy.exam.model.dto.Food;
+import com.ssafy.exam.model.dto.Member;
+import com.ssafy.exam.model.dto.RecommendFoodResponse;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,9 +15,13 @@ import java.util.List;
 public class FoodSearchService {
 
     private final FoodDataService foodDataService;
+    private final RestTemplate restTemplate;
+    private final MemberService memberService;
 
-    public FoodSearchService(FoodDataService foodDataService) {
+    public FoodSearchService(FoodDataService foodDataService, RestTemplate restTemplate, MemberService memberService) {
         this.foodDataService = foodDataService;
+        this.restTemplate = restTemplate;
+        this.memberService = memberService;
     }
 
     private int[] computeKMPTable(String pattern) {
@@ -129,4 +139,18 @@ public class FoodSearchService {
 
         return results;
     }
+
+    public RecommendFoodResponse getRecommend() {
+        String url = "http://localhost:9090/ai/recommendFood";
+        return restTemplate.postForObject(url, getMember(), RecommendFoodResponse.class);
+    }
+
+    private Member getMember() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication == null || authentication.getName() == null) {
+            throw new SecurityException();
+        }
+        return memberService.getMemberByEmail(authentication.getName());
+    }
+
 }
